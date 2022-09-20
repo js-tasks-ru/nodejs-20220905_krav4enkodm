@@ -1,0 +1,6 @@
+{
+  "watch": ["./**/*.ts"],
+  "ext": "ts,json",
+  "ignore": ["./**/*.test.ts"],
+  "exec": "ts-node ./03-streams/03-file-server-get/index.ts"
+}
