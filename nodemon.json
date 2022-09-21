@@ -1,6 +1,6 @@
 {
-  "watch": ["./**/*.ts"],
-  "ext": "ts,json",
-  "ignore": ["./**/*.test.ts"],
-  "exec": "ts-node ./03-streams/03-file-server-get/index.ts"
+  "watch": ["./**/*.js"],
+  "ext": "js,json",
+  "ignore": ["./**/*.test.js"],
+  "exec": "node ./03-streams/03-file-server-get/index.js"
 }

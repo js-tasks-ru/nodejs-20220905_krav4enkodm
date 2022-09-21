@@ -1,6 +1,6 @@
-import url from "url";
-import http from "http";
-import path from "path";
+import http from "node:http";
+import path from "node:path";
+import fs from "node:fs";
 
 const server = new http.Server();
 
@@ -12,6 +12,22 @@ server.on("request", (req, res) => {
 
   switch (req.method) {
     case "GET":
+      if (pathname.includes("/")) {
+        res.statusCode = 400;
+        res.end("Nested folders are not supported");
+        return;
+      }
+
+      fs.stat(filepath, (err, stat) => {
+        if (err?.code === "ENOENT") {
+          res.statusCode = 404;
+          res.end("File not found");
+          return;
+        }
+
+        const stream = fs.createReadStream(filepath);
+        stream.pipe(res);
+      });
       break;
 
     default:
