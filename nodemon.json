@@ -2,5 +2,5 @@
   "watch": ["./**/*.js"],
   "ext": "js,json",
   "ignore": ["./**/*.test.js"],
-  "exec": "node ./03-streams/03-file-server-get/index.js"
+  "exec": "node ./03-streams/04-file-server-post/index.js"
 }
