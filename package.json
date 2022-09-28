@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Node.JS Course Materials",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --no-warnings --ignore=node_modules/** **/*.test.js",
+    "test": "cross-env NODE_ENV=test mocha --require ts-node/register --extensions ts,js --no-warnings --ignore=node_modules/** **/*.test.{js,ts}",
     "lint": "eslint --ignore-pattern 'public' --ignore-pattern '*.test.js' --ignore-pattern 'client' .",
     "serve": "nodemon",
     "tsc": "tsc --watch"
@@ -16,6 +16,10 @@
     "@babel/preset-react": "^7.8.3",
     "@types/chai": "^4.3.3",
     "@types/fs-extra": "^9.0.13",
+    "@types/koa": "^2.13.5",
+    "@types/koa-bodyparser": "^4.3.8",
+    "@types/koa-router": "^7.4.4",
+    "@types/koa-static": "^4.0.2",
     "@types/mocha": "^9.1.1",
     "@types/sinon": "^10.0.13",
     "@typescript-eslint/parser": "^5.38.1",
