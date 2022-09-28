@@ -42,7 +42,7 @@ module.exports = class Validator {
           if (value > rules.max) {
             errors.push({
               field,
-              error: `too big, expect ${rules.min}, got ${value}`,
+              error: `too big, expect ${rules.max}, got ${value}`,
             });
           }
           break;
