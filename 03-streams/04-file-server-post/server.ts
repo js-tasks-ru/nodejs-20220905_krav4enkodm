@@ -1,36 +1,36 @@
-import http from "node:http";
-import path from "node:path";
-import fs from "node:fs";
-import LimitSizeStream from "./LimitSizeStream";
+import http from 'node:http';
+import path from 'node:path';
+import fs from 'node:fs';
+import LimitSizeStream from './LimitSizeStream';
 
 const server = new http.Server();
 
 const limit = Math.pow(1024, 2); // 1Mb
 
-server.on("request", (req, res) => {
-  const url = new URL(req.url ?? "", `http://${req.headers.host}`);
+server.on('request', (req, res) => {
+  const url = new URL(req.url ?? '', `http://${req.headers.host}`);
   const pathname = url.pathname.slice(1);
 
-  const filepath = path.join(__dirname, "files", pathname);
+  const filepath = path.join(__dirname, 'files', pathname);
 
   switch (req.method) {
-    case "POST":
-      if (pathname.includes("/")) {
+    case 'POST':
+      if (pathname.includes('/')) {
         res.statusCode = 400;
-        res.end("Nested folders are not supported");
+        res.end('Nested folders are not supported');
         return;
       }
 
       fs.stat(filepath, (err, stat) => {
-        if (err?.code === "ENOENT") {
-          const limitSizeStream = new LimitSizeStream({ limit });
+        if (err?.code === 'ENOENT') {
+          const limitSizeStream = new LimitSizeStream({limit});
           const writableStream = fs.createWriteStream(filepath, {
-            flags: "wx",
+            flags: 'wx',
           });
 
-          limitSizeStream.on("error", (err) => {
+          limitSizeStream.on('error', (err) => {
             // @ts-expect-error
-            if (err.code === "LIMIT_EXCEEDED") {
+            if (err.code === 'LIMIT_EXCEEDED') {
               res.statusCode = 413;
               res.end(`File size greater than ${limit} bytes`);
               removeFileFromDisk();
@@ -40,17 +40,17 @@ server.on("request", (req, res) => {
           });
 
           writableStream
-            .on("error", (err) => {
+            .on('error', (err) => {
               console.warn(err?.message);
               res.statusCode = 500;
-              res.end("Internar server error");
+              res.end('Internar server error');
             })
-            .on("finish", () => {
+            .on('finish', () => {
               res.statusCode = 201;
-              res.end("File uploaded");
+              res.end('File uploaded');
             });
 
-          req.on("aborted", removeFileFromDisk);
+          req.on('aborted', removeFileFromDisk);
 
           req.pipe(limitSizeStream).pipe(writableStream);
 
@@ -58,7 +58,7 @@ server.on("request", (req, res) => {
         }
 
         res.statusCode = 409;
-        res.end("File already exist");
+        res.end('File already exist');
       });
 
       // res.end("wtf?");
@@ -66,7 +66,7 @@ server.on("request", (req, res) => {
 
     default:
       res.statusCode = 501;
-      res.end("Not implemented");
+      res.end('Not implemented');
   }
 
   function removeFileFromDisk() {
