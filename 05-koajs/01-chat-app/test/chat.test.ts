@@ -4,7 +4,7 @@ import {expect} from 'chai';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe.only('koajs/chat-app', () => {
+describe('koajs/chat-app', () => {
   describe('тесты на чат', () => {
     let server: any;
 
