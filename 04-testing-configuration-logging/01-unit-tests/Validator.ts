@@ -1,10 +1,28 @@
-module.exports = class Validator {
-  constructor(rules) {
+type Rules = Record<
+  string,
+  {
+    type: 'string' | 'number';
+    min: number;
+    max: number;
+  }
+>;
+
+type Error = {
+  field: string;
+  error: string;
+};
+
+type Value = Record<string, string | number>;
+
+export default class Validator {
+  rules: Rules;
+
+  constructor(rules: Rules) {
     this.rules = rules;
   }
 
-  validate(obj) {
-    const errors = [];
+  validate(obj: Value) {
+    const errors: Error[] = [];
 
     for (const field of Object.keys(this.rules)) {
       const rules = this.rules[field];
@@ -19,15 +37,19 @@ module.exports = class Validator {
 
       switch (type) {
         case 'string':
+          // @ts-expect-error
           if (value.length < rules.min) {
             errors.push({
               field,
+              // @ts-expect-error
               error: `too short, expect ${rules.min}, got ${value.length}`,
             });
           }
+          // @ts-expect-error
           if (value.length > rules.max) {
             errors.push({
               field,
+              // @ts-expect-error
               error: `too long, expect ${rules.max}, got ${value.length}`,
             });
           }
@@ -51,4 +73,4 @@ module.exports = class Validator {
 
     return errors;
   }
-};
+}

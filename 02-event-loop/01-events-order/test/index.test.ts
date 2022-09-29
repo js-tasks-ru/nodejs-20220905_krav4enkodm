@@ -1,8 +1,8 @@
-const fs = require('fs');
-const {EOL} = require('os');
-const {execSync} = require('child_process');
-const path = require('path');
-const expect = require('chai').expect;
+import fs from 'fs';
+import {EOL} from 'os';
+import {execSync} from 'child_process';
+import path from 'path';
+import {expect} from 'chai';
 
 describe('event-loop/events-order', () => {
   describe('Порядок вывода сообщений', () => {
@@ -18,7 +18,7 @@ describe('event-loop/events-order', () => {
         })
         .replace(/\r\n|\r|\n/g, EOL);
 
-      const output = execSync(`node "${path.join(__dirname, '../index.js')}"`, {
+      const output = execSync(`node "${path.join(__dirname, '../index.ts')}"`, {
         encoding: 'utf-8',
       }).replace(/\r\n|\r|\n/g, EOL);
 

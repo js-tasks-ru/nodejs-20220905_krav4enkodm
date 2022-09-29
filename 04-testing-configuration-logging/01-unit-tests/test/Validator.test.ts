@@ -1,5 +1,5 @@
-const Validator = require('../Validator');
-const expect = require('chai').expect;
+import Validator from '../Validator';
+import {expect} from 'chai';
 
 describe('testing-configuration-logging/unit-tests', () => {
   describe('Validator', () => {
