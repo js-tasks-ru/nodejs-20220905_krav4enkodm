@@ -100,6 +100,13 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["./01-intro/**/*", "./03-streams/**/*", "./05-koajs/**/*"],
+  "include": [
+    "./01-intro/**/*",
+    "./02-event-loop/**/*",
+    "./03-streams/**/*",
+    "./04-testing-configuration-logging/**/*",
+    "./05-koajs/**/*",
+    "./06-mongodb-mongoose/**/*"
+  ],
   "exclude": ["node_modules"]
 }
