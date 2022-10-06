@@ -1,42 +1,42 @@
-import LimitSizeStream from "../LimitSizeStream";
-import LimitExceededError from "../LimitExceededError";
-import { expect } from "chai";
-import sinon from "sinon";
+import LimitSizeStream from '../LimitSizeStream';
+import LimitExceededError from '../LimitExceededError';
+import {expect} from 'chai';
+import sinon from 'sinon';
 
-describe("streams/limit-size-stream", () => {
-  describe("LimitSizeStream", () => {
-    it("стрим передает поступающие данные без изменений", (done) => {
-      const limitStream = new LimitSizeStream({ limit: 3, encoding: "utf-8" });
+describe('streams/limit-size-stream', () => {
+  describe('LimitSizeStream', () => {
+    it('стрим передает поступающие данные без изменений', (done) => {
+      const limitStream = new LimitSizeStream({limit: 3, encoding: 'utf-8'});
 
       const onData = sinon.spy();
 
-      limitStream.on("data", onData);
-      limitStream.on("end", () => {
+      limitStream.on('data', onData);
+      limitStream.on('end', () => {
         expect(onData.calledTwice, `событие 'data' должно произойти 2 раза`).to
           .be.true;
         expect(
           onData.firstCall.args[0],
           `при первом вызове события 'data' в обработчик должна быть передана строка 'a'`
-        ).to.equal("a");
+        ).to.equal('a');
         expect(
           onData.secondCall.args[0],
           `при втором вызове события 'data' в обработчик должна быть передана строка 'b'`
-        ).to.equal("b");
+        ).to.equal('b');
         done();
       });
 
-      limitStream.write("a");
-      limitStream.write("b");
+      limitStream.write('a');
+      limitStream.write('b');
       limitStream.end();
     });
 
-    it("при превышении лимита выбрасывается ошибка", (done) => {
-      const limitStream = new LimitSizeStream({ limit: 2, encoding: "utf-8" });
+    it('при превышении лимита выбрасывается ошибка', (done) => {
+      const limitStream = new LimitSizeStream({limit: 2, encoding: 'utf-8'});
 
       const onData = sinon.spy();
 
-      limitStream.on("data", onData);
-      limitStream.on("error", (err) => {
+      limitStream.on('data', onData);
+      limitStream.on('error', (err) => {
         expect(err).to.be.instanceOf(LimitExceededError);
         expect(
           onData.calledTwice,
@@ -45,38 +45,38 @@ describe("streams/limit-size-stream", () => {
         expect(
           onData.firstCall.args[0],
           `при первом вызове события 'data' в обработчик должна быть передана строка 'a'`
-        ).to.equal("a");
+        ).to.equal('a');
         expect(
           onData.secondCall.args[0],
           `при втором вызове события 'data' в обработчик должна быть передана строка 'b'`
-        ).to.equal("b");
+        ).to.equal('b');
 
         done();
       });
 
-      limitStream.on("close", () => {
+      limitStream.on('close', () => {
         expect(
           limitStream.readableEnded,
           `стрим должен выбросить ошибку используя событие 'error'`
         ).to.be.false;
       });
 
-      limitStream.write("a");
-      limitStream.write("b");
-      limitStream.end("c");
+      limitStream.write('a');
+      limitStream.write('b');
+      limitStream.end('c');
     });
 
-    it("при проверке лимита должно учитываться количество байт, а не символов", (done) => {
-      const smile = "😀";
+    it('при проверке лимита должно учитываться количество байт, а не символов', (done) => {
+      const smile = '😀';
       const limitStream = new LimitSizeStream({
         limit: Buffer.from(smile).length * 2 + 1,
-        encoding: "utf-8",
+        encoding: 'utf-8',
       });
 
       const onData = sinon.spy();
 
-      limitStream.on("data", onData);
-      limitStream.on("error", (err) => {
+      limitStream.on('data', onData);
+      limitStream.on('error', (err) => {
         expect(err).to.be.instanceOf(LimitExceededError);
 
         expect(
@@ -97,10 +97,11 @@ describe("streams/limit-size-stream", () => {
         done();
       });
 
-      limitStream.on("close", () => {
+      limitStream.on('close', () => {
         expect(
           limitStream.readableEnded,
-          `стрим должен выбросить ошибку используя событие 'error', возможно подсчет байт происходит неверно`
+          `стрим должен выбросить ошибку используя событие 'error', 
+          возможно подсчет байт происходит неверно`
         ).to.be.false;
       });
 

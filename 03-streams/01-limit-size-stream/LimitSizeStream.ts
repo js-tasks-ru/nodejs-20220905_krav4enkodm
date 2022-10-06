@@ -1,5 +1,5 @@
-import { Transform, TransformOptions, TransformCallback } from "stream";
-import LimitExceededError from "./LimitExceededError";
+import {Transform, TransformOptions, TransformCallback} from 'stream';
+import LimitExceededError from './LimitExceededError';
 
 interface LimitSizeStreamOption extends TransformOptions {
   limit: number;

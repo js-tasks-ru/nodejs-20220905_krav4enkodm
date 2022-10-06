@@ -1,12 +1,12 @@
 class LimitExceededError extends Error {
+  code = 'LIMIT_EXCEEDED';
+
   constructor() {
     super('Limit has been exceeded.');
 
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
-
-    this.code = 'LIMIT_EXCEEDED';
   }
 }
 
-module.exports = LimitExceededError;
+export default LimitExceededError;
