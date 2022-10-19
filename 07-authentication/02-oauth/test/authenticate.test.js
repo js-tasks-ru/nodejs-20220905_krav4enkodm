@@ -5,7 +5,7 @@ const User = require('../models/User');
 const users = require('../../../data/users');
 
 describe('authentication/oauth', () => {
-  describe('функция аутентификации', function() {
+  describe('функция аутентификации', function () {
     before(async () => {
       await User.deleteMany();
 
@@ -25,7 +25,7 @@ describe('authentication/oauth', () => {
       authenticate('vkontakte', undefined, 'name', (err, user, msg) => {
         if (err) return done(err);
 
-        expect(user).to.be.false;
+        expect(user).to.be.null;
         expect(msg).to.equal('Не указан email');
         done();
       });
