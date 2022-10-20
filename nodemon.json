@@ -1,6 +1,5 @@
 {
-  "watch": ["./**/*.ts"],
-  "ext": "ts,json",
-  "ignore": ["./**/*.test.ts", "./**/*.test.js"],
-  "exec": "ts-node ./05-koajs/01-chat-app/index.ts"
+  "watch": ["./**/*.js"],
+  "ext": "ts,js,json",
+  "ignore": ["./**/*.test.ts", "./**/*.test.js"]
 }
